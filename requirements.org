@@ -53,13 +53,20 @@
    - [ ] implement anything marked XXX TODO: in static/index.html
    - [ ] /clear returns the current state of the world {}
    - [ ] PUT returns the object that was PUT. 
+   - [ ] Client MUST NOT use POST to query the /world
+   - [ ] GET /world must return the world
+   - [ ] You can use the observer pattern
+   - [ ] Must use 1 new Canvas feature for drawing.
+   - [ ] Must use PUT to change individual objects within the world
+   - [ ] UI must include clear button and it must clear for
+         both clients
    - [ ] http://hostname:5000/static/index.html will work to produce the UI
-         (so http://127.0.0.1:5000/static/index.html should work and http://localhost:5000/static/index.html should work)
+         (so http://127.0.0.1:5000/static/index.html MUST work and http://localhost:5000/static/index.html MUST work)
 
  
 ** Restrictions
-   - [ ] Use Python 3.6
-   - [ ] Must run in the VM (Ubuntu 18.10)
+   - [ ] Use Python 3.6+
+   - [ ] Must run in the VM (Ubuntu 18.10+)
    - [ ] License your code properly (use an OSI approved license)
      - Put your name on it!
 
@@ -84,6 +91,6 @@
 ** Marking
    - 3 marks for passing all of the tests
    - 1 mark for passing not-free-tests.py
-   - 2 marks for being usable in the browser
-   - 1 mark for looking better than what I gave you
+   - 2 marks for being usable in the browser (0 for no synch)
+   - 1 mark for looking better than what I gave you (0 for not being usable in the browser)
      
