@@ -37,7 +37,7 @@
      get updates.
 
 ** Requirements
-
+   
    - [ ] Implement the AJAX Javascript parts in the HTML file static/index.htm
    - [ ] Implement the webservice root
    - [ ] Implement the webservice /entity/entity-name POST/PUT/GET API
@@ -55,6 +55,7 @@
    - [ ] PUT returns the object that was PUT. 
    - [ ] http://hostname:5000/static/index.html will work to produce the UI
          (so http://127.0.0.1:5000/static/index.html should work and http://localhost:5000/static/index.html should work)
+   - [ ] Doesn't abuse POST, doesn't poll /world with POST method.
 
  
 ** Restrictions
