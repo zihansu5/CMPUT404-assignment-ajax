@@ -39,11 +39,10 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
             try {
                 if (xhr.status==200) {
                     //XXX: parse some JSON from the request!
+                    //XXX: Pass the data to the callback!
                     // https://www.w3schools.com/js/js_json_http.asp
-                    xhr_parsed = JSON.parse(xhr.responseText);
-                    //XXX: Pass the data to the callback! 
-                    callback(context, xhr_parsed);
-                    
+                    var parsedReq = JSON.parse(xhr.responseText);
+                    callback(context, parsedReq); // For drawCircle(context, entity)
                 }
             } 
             catch(e) {
@@ -52,12 +51,13 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
         }
     };
     //XXX: POST to a URL
-    xhr.open('POST', url, true);
     //XXX: set the mimetype and the accept headers!
     // Remember to use application/json !
+    xhr.open("POST", url, true);
+    // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Accept', 'application/json');
-    // https://makitweb.com/how-to-send-get-and-post-ajax-request-with-javascript/
+    // https://stackoverflow.com/questions/29299184/xmlhttprequest-send-js-object
     xhr.send(JSON.stringify(objects));
 }
 
@@ -68,14 +68,15 @@ world = {};
 function drawCircle(context,entity) {
     with(context) {
         beginPath();              
-        lineWidth = 10;
+        lineWidth = 2;
         var x = entity["x"];
         var y = entity["y"];
         //moveTo(x,y);
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
         arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
-        stroke();                                
+        // https://www.w3schools.com/tags/canvas_arc.asp
+        fill();                                
     }
 }
 
@@ -147,7 +148,9 @@ function addEntity(entity, data) {
     world[entity] = data;
     drawNextFrame(); // (but should we?)
     //XXX: Send a XHTML Request that updates the entity you just  modified!
-    sendJSONXMLHTTPRequest("http://127.0.0.1:5000/entity/" + entity, data, drawNextFrame);
+    sendJSONXMLHTTPRequest("http://127.0.0.1:5000/entity/"+entity, data, drawCircle)
+    drawNextFrame();
+
 }
 
 var counter = 0;
@@ -256,30 +259,26 @@ mouse = (function() {
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'FA8072'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'#89CFF0'});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'FA8072'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'#f4c2c2'});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'FFFACD',
+    addEntityWithoutName({'x':x,'y':y,'colour':'white',
                           'radius':10});
 });
 
-function sendJSONXMLHTTPRequest_GET(url, callback) {
+function sendGetJSONXMLHTTPRequest(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState==4) {
             try {
                 if (xhr.status==200) {
-                    //XXX: parse some JSON from the request!
-                    // https://www.w3schools.com/js/js_json_http.asp
-                    xhr_parsed = JSON.parse(xhr.responseText);
-                    //XXX: Pass the data to the callback! 
-                    callback(xhr_parsed);
-                    
+                    var parsedReq = JSON.parse(xhr.responseText);
+                    callback(parsedReq);
                 }
             } 
             catch(e) {
@@ -287,24 +286,24 @@ function sendJSONXMLHTTPRequest_GET(url, callback) {
             }
         }
     };
-    //XXX: POST to a URL
-    xhr.open('GET', url, true);
-    //XXX: set the mimetype and the accept headers!
     // Remember to use application/json !
+    xhr.open("GET", url, true);
+    // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Accept', 'application/json');
-    // https://makitweb.com/how-to-send-get-and-post-ajax-request-with-javascript/
+    // https://stackoverflow.com/questions/29299184/xmlhttprequest-send-js-object
     xhr.send();
 }
 
-function updateWorld(newWorld) {
+function setWorld(newWorld) {
     world = newWorld;
     drawNextFrame();
 }
+
 function update() {
     //XXX: TODO Get the world from the webservice using a XMLHTTPRequest
-    sendJSONXMLHTTPRequest_GET("http://127.0.0.1:5000/world", updateWorld);
-    drawFrame(); 
+    sendGetJSONXMLHTTPRequest("http://127.0.0.1:5000/world", setWorld);
+    drawFrame();
 }
 
 // 30 frames per second
