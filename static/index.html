@@ -75,7 +75,7 @@ function drawCircle(context,entity) {
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
         arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
-        stroke();                                
+        fill();                                
     }
 }
 
@@ -256,16 +256,16 @@ mouse = (function() {
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'white'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'#fa8072'});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'white'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'#fa8072'});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'grey',
-                          'radius':10});
+    addEntityWithoutName({'x':x,'y':y,'colour':'fffacd',
+                          'radius':5});
 });
 
 function sendJSONXMLHTTPRequest_GET(url, callback) {
