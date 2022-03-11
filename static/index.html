@@ -40,9 +40,9 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
                 if (xhr.status==200) {
                     //XXX: parse some JSON from the request!
                     // https://www.w3schools.com/js/js_json_http.asp
-                    xhr_parsed = JSON.parse(xhr.responseText)
+                    xhr_parsed = JSON.parse(xhr.responseText);
                     //XXX: Pass the data to the callback! 
-                    callback(xhr_parsed)
+                    callback(context, xhr_parsed);
                     
                 }
             } 
@@ -52,13 +52,13 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
         }
     };
     //XXX: POST to a URL
-    xhr.open('POST', url, true)
+    xhr.open('POST', url, true);
     //XXX: set the mimetype and the accept headers!
     // Remember to use application/json !
-    xhr.setRequestHeader('Content-Type', 'application/json')
-    xhr.setRequestHeader('Accept', 'application/json')
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Accept', 'application/json');
     // https://makitweb.com/how-to-send-get-and-post-ajax-request-with-javascript/
-    xhr.send(JSON.stringify(objects))
+    xhr.send(JSON.stringify(objects));
 }
 
 
@@ -276,9 +276,9 @@ function sendJSONXMLHTTPRequest_GET(url, callback) {
                 if (xhr.status==200) {
                     //XXX: parse some JSON from the request!
                     // https://www.w3schools.com/js/js_json_http.asp
-                    xhr_parsed = JSON.parse(xhr.responseText)
+                    xhr_parsed = JSON.parse(xhr.responseText);
                     //XXX: Pass the data to the callback! 
-                    callback(xhr_parsed)
+                    callback(xhr_parsed);
                     
                 }
             } 
@@ -288,17 +288,17 @@ function sendJSONXMLHTTPRequest_GET(url, callback) {
         }
     };
     //XXX: POST to a URL
-    xhr.open('GET', url, true)
+    xhr.open('GET', url, true);
     //XXX: set the mimetype and the accept headers!
     // Remember to use application/json !
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.setRequestHeader('Accept', 'application/json')
     // https://makitweb.com/how-to-send-get-and-post-ajax-request-with-javascript/
-    xhr.send()
+    xhr.send();
 }
 
 function updateWorld(newWorld) {
-    world = newWorld
+    world = newWorld;
     drawNextFrame();
 }
 function update() {
