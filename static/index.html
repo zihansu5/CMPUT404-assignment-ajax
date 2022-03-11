@@ -75,8 +75,7 @@ function drawCircle(context,entity) {
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
         arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
-        // stroke();  
-        fill()                              
+        stroke();                                
     }
 }
 
@@ -148,7 +147,7 @@ function addEntity(entity, data) {
     world[entity] = data;
     drawNextFrame(); // (but should we?)
     //XXX: Send a XHTML Request that updates the entity you just  modified!
-    sendJSONXMLHTTPRequest("http://127.0.0.1:5000/entity/" + entity, data, drawCircle);
+    sendJSONXMLHTTPRequest("http://127.0.0.1:5000/entity/" + entity, data, drawNextFrame)
 }
 
 var counter = 0;
@@ -257,15 +256,15 @@ mouse = (function() {
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'FA8072'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'white'});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'FA8072'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'white'});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'FFFACD',
+    addEntityWithoutName({'x':x,'y':y,'colour':'grey',
                           'radius':10});
 });
 
